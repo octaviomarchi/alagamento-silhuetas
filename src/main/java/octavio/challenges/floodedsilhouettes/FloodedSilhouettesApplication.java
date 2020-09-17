@@ -15,6 +15,6 @@ public class FloodedSilhouettesApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        
+        FileHandler fileHandler = new FileHandler("caso1.txt");
     }
 }
