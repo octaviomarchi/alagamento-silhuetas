@@ -22,9 +22,10 @@ public class FloodedSilhouettesApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        final String fileName = "caso2";
-        Path readFilePath = Paths.get(getClass().getClassLoader().getResource(fileName + ".txt").toURI());
-//        Path writeFilePath = Paths.get(getClass().getClassLoader().getResource(fileName + "-results.txt").toURI());
+
+        final String FILE_NAME = "caso2";
+
+        Path readFilePath = Paths.get(getClass().getClassLoader().getResource(FILE_NAME + ".txt").toURI());
         List<List<Integer>> testCases;
         List<Integer> results = new ArrayList<>();
 
@@ -40,6 +41,6 @@ public class FloodedSilhouettesApplication implements CommandLineRunner {
         }
 
         // Writing results to file
-        FileCreator fileCreator = new FileCreator(fileName + "-results", results);
+        FileCreator fileCreator = new FileCreator(FILE_NAME + "-results", results);
     }
 }
