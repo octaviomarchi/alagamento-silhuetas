@@ -23,7 +23,12 @@ public class FloodedSilhouettesApplication implements CommandLineRunner {
         Path filePath = Paths.get(getClass().getClassLoader().getResource(fileName).toURI());
         List<List<Integer>> testCases;
 
-        FileHandler fileHandler = new FileHandler(filePath);
-        testCases = fileHandler.getTestCases();
+        FileReader fileReader = new FileReader(filePath);
+        testCases = fileReader.getTestCases();
+
+        for(List<Integer> testCase : testCases){
+            FloodedSilhouettes floodedSilhouettes = new FloodedSilhouettes(testCase);
+            System.out.println(floodedSilhouettes.getFloodedAmount());
+        }
     }
 }

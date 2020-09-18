@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FileHandlerTest {
+class FileReaderTest {
     private Path getPathFromFileName(String fileName){
         Path path = null;
         try {
@@ -25,7 +25,7 @@ class FileHandlerTest {
     @Test
     void workingSample() {
         Path filePath = getPathFromFileName("valid5cases.txt");
-        FileHandler fileHandler = new FileHandler(filePath);
+        FileReader fileReader = new FileReader(filePath);
 
         List<List<Integer>> expectedResults = new ArrayList<>();
         expectedResults.add(Arrays.asList(1));
@@ -34,7 +34,7 @@ class FileHandlerTest {
         expectedResults.add(Arrays.asList(1, 2, 3, 4));
         expectedResults.add(Arrays.asList(5, 4, 3, 4, 5));
 
-        assertEquals(5, fileHandler.getTotalCases());
-        assertIterableEquals(expectedResults, fileHandler.getTestCases());
+        assertEquals(5, fileReader.getTotalCases());
+        assertIterableEquals(expectedResults, fileReader.getTestCases());
     }
 }

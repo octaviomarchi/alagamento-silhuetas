@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
-public class FileHandler {
+public class FileReader {
 
     final int MAX_INPUTS = 100;
     final int MIN_INPUTS = 1;
@@ -23,7 +23,7 @@ public class FileHandler {
     private List<List<Integer>> testCases;
     private Integer totalCases;
 
-    public FileHandler(Path filePath) {
+    public FileReader(Path filePath) {
         try {
             readFileInList(filePath);
             if (isFileValid()){
