@@ -1,8 +1,11 @@
 package octavio.challenges.floodedsilhouettes;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 public class FloodedSilhouettes {
     private Integer floodedAmount = 0;
 
@@ -17,7 +20,7 @@ public class FloodedSilhouettes {
         Integer minValue = Collections.min(columns);
         Integer maxFloodableHeight = Collections.max(columns);
 
-        for (int currentHeight = minValue + 1; currentHeight < maxFloodableHeight; currentHeight++) {
+        for (int currentHeight = minValue + 1; currentHeight <= maxFloodableHeight; currentHeight++) {
             boolean isInsideWall = false;
             int countAmount = 0;
             for(Integer column : columns){
@@ -25,14 +28,17 @@ public class FloodedSilhouettes {
                     if (column < currentHeight){
                         countAmount++;
                     } else {
-                        this.floodedAmount += countAmount;
-                        countAmount = 0;
+                        if (countAmount > 0) {
+                            log.debug("adding: " + countAmount);
+                            this.floodedAmount += countAmount;
+                            countAmount = 0;
+                        }
                     }
                 } else if(column >= currentHeight){
                     isInsideWall = true;
                 }
-
             }
+            log.debug("Height: " + currentHeight + "\t current total: " + floodedAmount);
         }
 
 

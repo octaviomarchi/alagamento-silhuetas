@@ -1,13 +1,16 @@
 package octavio.challenges.floodedsilhouettes;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @SpringBootApplication
 public class FloodedSilhouettesApplication implements CommandLineRunner {
 
@@ -19,16 +22,24 @@ public class FloodedSilhouettesApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        final String fileName = "caso1.txt";
-        Path filePath = Paths.get(getClass().getClassLoader().getResource(fileName).toURI());
+        final String fileName = "caso2";
+        Path readFilePath = Paths.get(getClass().getClassLoader().getResource(fileName + ".txt").toURI());
+//        Path writeFilePath = Paths.get(getClass().getClassLoader().getResource(fileName + "-results.txt").toURI());
         List<List<Integer>> testCases;
+        List<Integer> results = new ArrayList<>();
 
-        FileReader fileReader = new FileReader(filePath);
+        // Getting data from file
+        FileReader fileReader = new FileReader(readFilePath);
         testCases = fileReader.getTestCases();
 
+        // Calculating the results
         for(List<Integer> testCase : testCases){
             FloodedSilhouettes floodedSilhouettes = new FloodedSilhouettes(testCase);
-            System.out.println(floodedSilhouettes.getFloodedAmount());
+            log.debug(String.valueOf(floodedSilhouettes.getFloodedAmount()));
+            results.add(floodedSilhouettes.getFloodedAmount());
         }
+
+        // Writing results to file
+        FileCreator fileCreator = new FileCreator(fileName + "-results", results);
     }
 }
