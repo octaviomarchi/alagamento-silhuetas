@@ -23,15 +23,17 @@ public class FileReader {
     private List<List<Integer>> testCases;
     private Integer totalCases;
 
-    public FileReader(Path filePath) {
-        try {
-            readFileInList(filePath);
-            if (isFileValid()){
-                setTestCases(fileContent);
-            }
-        } catch (URISyntaxException e){
-            e.printStackTrace();
+    public FileReader(Path filePath) throws URISyntaxException {
+
+        readFileInList(filePath);
+        if (isFileValid()) {
+            setTestCases(fileContent);
+        } else {
+            System.out.println("Application is closing");
+            System.exit(1);
         }
+
+
     }
 
     private void readFileInList(Path filePath) throws URISyntaxException {
@@ -42,23 +44,26 @@ public class FileReader {
         }
     }
 
-    private boolean isFileValid(){
+    private boolean isFileValid() {
         boolean isValid = true;
         totalCases = Integer.valueOf(fileContent.get(0));
         // check if we have between 1 and 100 cases to test
-        if (totalCases.intValue() < MIN_INPUTS || totalCases.intValue() > MAX_INPUTS){
+        if (totalCases.intValue() < MIN_INPUTS || totalCases.intValue() > MAX_INPUTS) {
             log.debug("File has more cases than the max allowed");
+            System.out.println("File has more cases than the max allowed");
             isValid = false;
         }
-        if (totalCases.intValue() != (fileContent.size() -1)/2 ){
+        if (totalCases.intValue() != (fileContent.size() - 1) / 2) {
             log.debug("There are more cases than informed in the file");
+            System.out.println("There are more cases than informed in the file");
             isValid = false;
         }
-        for(int i = 1; i < fileContent.size(); i += 2){
+        for (int i = 1; i < fileContent.size(); i += 2) {
             int columnsExpected = Integer.valueOf(fileContent.get(i));
-            int contentLength = fileContent.get(i+1).trim().split("\\s").length;
-            if(columnsExpected != contentLength){
-                log.debug("Case " + (i-1)/2 + "does not have the same number of silhouettes");
+            int contentLength = fileContent.get(i + 1).trim().split("\\s").length;
+            if (columnsExpected != contentLength) {
+                log.debug("Case " + (i - 1) / 2 + "does not have the same number of silhouettes");
+                System.out.println("Case " + (i - 1) / 2 + "does not have the same number of silhouettes");
                 isValid = false;
                 break;
             }
@@ -67,9 +72,9 @@ public class FileReader {
         return isValid;
     }
 
-    private void setTestCases(List<String> fileContent){
+    private void setTestCases(List<String> fileContent) {
         testCases = new ArrayList<>();
-        for(int i = 2; i < fileContent.size(); i += 2){
+        for (int i = 2; i < fileContent.size(); i += 2) {
             List<String> stringList = Arrays.asList(fileContent.get(i).trim().split("\\s"));
             List<Integer> listInteger = stringList.stream().map(Integer::valueOf).collect(Collectors.toList());
             testCases.add(listInteger);

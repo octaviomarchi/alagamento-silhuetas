@@ -1,5 +1,6 @@
 package octavio.challenges.floodedsilhouettes;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.net.URISyntaxException;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Slf4j
 class FileReaderTest {
     private Path getPathFromFileName(String fileName){
         Path path = null;
@@ -25,7 +27,13 @@ class FileReaderTest {
     @Test
     void workingSample() {
         Path filePath = getPathFromFileName("valid5cases.txt");
-        FileReader fileReader = new FileReader(filePath);
+        FileReader fileReader = null;
+        try {
+            fileReader = new FileReader(filePath);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            log.error("Problem reading the file", e);
+        }
 
         List<List<Integer>> expectedResults = new ArrayList<>();
         expectedResults.add(Arrays.asList(1));
